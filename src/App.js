@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component {
   render() {
-    var helloWorld = '리액트에 오신 여러분을 환영합니다';
+    const helloWorld = '리액트에 오신 여러분을 환영합니다';
     return (
       <div className="App">
         <h2>{helloWorld}</h2>
