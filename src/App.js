@@ -26,9 +26,8 @@ class App extends Component {
     const helloWorld = '리액트에 오신 여러분을 환영합니다';
     return (
       <div className="App">
-        {list.map(function(item) {
-          return(
-            <div>
+        {list.map(item =>
+            <div key={item.objectID}>
               <span>
                 <a href={item.url}>{item.title}</a>
               </span>
@@ -36,8 +35,7 @@ class App extends Component {
               <span>{item.num_comments}</span>
               <span>{item.points}</span>
             </div>
-          );
-        })}
+        )}
       </div>
     );
   }
