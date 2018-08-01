@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 
+
 const list = [
   {
     title: 'React',
@@ -34,8 +35,50 @@ class Developer {
 }
 */
 
+const Table = ({ list, pattern, onDismiss }) =>
+  <div className="table">
+    {list.filter(isSearched(pattern)).map(item =>
+      <div key={item.objectID} className="table-row">
+        <span style={{ width: '40%' }}>
+          <a href={item.url}>{item.title}</a>
+        </span>
+        <span style={{ width: '30%' }}>
+          {item.author}
+        </span>
+        <span style={{ smallColumn }}>
+          {item.num_comments}
+        </span>
+        <span style={{ smallColumn }}>
+          {item.points}
+        </span>
+        <span style={{ smallColumn }}>
+          <Button
+            onClick={() => onDismiss(item.objectID)}
+            className="button-inline"
+          >
+            Dismiss
+          </Button>
+        </span>
+      </div>
+    )}
+  </div>
+
+
 const isSearched = (searchTerm) => item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    item.title.includes(searchTerm);
+
+
+const largeColumn = {
+  width: '40%',
+};
+
+const midColumn = {
+  width: '30%',
+};
+
+const smallColumn = {
+  width: '10%',
+};
 
 class App extends Component {
   constructor(props) {
@@ -58,7 +101,6 @@ class App extends Component {
   }
 
   onDismiss(id) {
-
     const isNotId = item => item.objectID !== id;
     const updatedList = this.state.list.filter(isNotId);
 
@@ -74,40 +116,63 @@ class App extends Component {
   }
 */
 
-  render() {
-    //const robin = new Developer('Robin', 'Wieruch');
-    //console.log(robin.getName());
+render() {
     const { searchTerm, list } = this.state;
     return (
-      <div className="App">
-        <form>
-          <input
-            type="text"
+      <div className="page">
+        <div className="interactions">
+          <Search
             value={searchTerm}
             onChange={this.onSearchChange}
-          />
-        </form>
-        {this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
-            <div key={item.objectID}>
-              <span>
-                <a href={item.url}>{item.title}</a>
-              </span>
-              <span>{item.author}</span>
-              <span>{item.num_comments}</span>
-              <span>{item.points}</span>
-              <span>
-                <button
-                  onClick={() => this.onDismiss(item.objectID)}
-                  type="button"
-                >
-                  dismiss
-                </button>
-              </span>
-            </div>
-        )}
+          >
+            Search
+          </Search>
+        </div>
+        <Table
+          list={list}
+          pattern={searchTerm}
+          onDismiss={this.onDismiss}
+        />
       </div>
     );
   }
 }
+
+class Button extends Component {
+  render() {
+    const {
+      onClick,
+      className = '',
+      children,
+    } = this.props;
+  
+    return(
+      <button
+        onClick={onClick}
+        className={className}
+        type='button'
+      >
+        {children}
+      </button>
+    );
+  }
+}
+
+class Search extends Component {
+  render() {
+    const { value, onChange, children } = this.props;
+    return (
+      <form>
+        {children} <input
+          type="text"
+          value={value}
+          onChange={onChange}
+        />
+      </form>
+    );
+  }
+}
+
+
 
 export default App;
