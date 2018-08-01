@@ -33,13 +33,20 @@ class Developer {
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      list: list,
+    }
+  }
   render() {
     const robin = new Developer('Robin', 'Wieruch');
     console.log(robin.getName());
 
     return (
       <div className="App">
-        {list.map(item =>
+        {this.state.list.map(item =>
             <div key={item.objectID}>
               <span>
                 <a href={item.url}>{item.title}</a>
