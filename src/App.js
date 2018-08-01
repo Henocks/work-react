@@ -77,12 +77,13 @@ class App extends Component {
   render() {
     //const robin = new Developer('Robin', 'Wieruch');
     //console.log(robin.getName());
-
+    const { searchTerm, list } = this.state;
     return (
       <div className="App">
         <form>
           <input
             type="text"
+            value={searchTerm}
             onChange={this.onSearchChange}
           />
         </form>
