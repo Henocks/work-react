@@ -41,7 +41,12 @@ class App extends Component {
     }
 
     this.onDismiss = this.onDismiss.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
 
+  }
+
+  onSearchChange() {
+    
   }
 
   onDismiss(id) {
@@ -52,6 +57,14 @@ class App extends Component {
     this.setState({ list: updatedList });
 
   }
+/* using arrow function. auto binding!
+  onDismiss = (id) => {
+    const isNotId = item => item.objectID !== id;
+    const updatedList = this.state.list.filter(isNotId);
+
+    this.setState({ list: updatedList });
+  }
+*/
 
   render() {
     const robin = new Developer('Robin', 'Wieruch');
@@ -59,6 +72,12 @@ class App extends Component {
 
     return (
       <div className="App">
+        <form>
+          <input
+            type="text"
+            onChange={this.onSearchChange}
+          />
+        </form>
         {this.state.list.map(item =>
             <div key={item.objectID}>
               <span>
