@@ -21,6 +21,7 @@ const list = [
   }
 ];
 
+/*
 class Developer {
   constructor(firstname, lastname) {
     this.firstname = firstname;
@@ -31,6 +32,10 @@ class Developer {
     return this.firstname + ' ' + this.lastname;
   }
 }
+*/
+
+const isSearched = (searchTerm) => item =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +43,7 @@ class App extends Component {
 
     this.state = {
       list,
+      searchTerm: '',
     }
 
     this.onDismiss = this.onDismiss.bind(this);
@@ -45,8 +51,10 @@ class App extends Component {
 
   }
 
-  onSearchChange() {
-    
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value });
+    console.log("Changed!");
+
   }
 
   onDismiss(id) {
@@ -67,8 +75,8 @@ class App extends Component {
 */
 
   render() {
-    const robin = new Developer('Robin', 'Wieruch');
-    console.log(robin.getName());
+    //const robin = new Developer('Robin', 'Wieruch');
+    //console.log(robin.getName());
 
     return (
       <div className="App">
@@ -78,7 +86,7 @@ class App extends Component {
             onChange={this.onSearchChange}
           />
         </form>
-        {this.state.list.map(item =>
+        {this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
             <div key={item.objectID}>
               <span>
                 <a href={item.url}>{item.title}</a>
